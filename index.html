@@ -151,60 +151,78 @@
       }
 
       /* Spinner Modal */
-      #spinnerModal {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(6px);
-      }
+#spinnerModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.4s ease;
+}
 
-      .spinner-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 30px 20px;
-        border-radius: 16px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        max-width: 320px;
-      }
+.spinner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: linear-gradient(145deg, #ffffff, #f3e8ff);
+  padding: 40px 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  max-width: 330px;
+  animation: popIn 0.4s ease;
+}
 
-      .spinner-content h3 {
-        font-size: 18px;
-        color: #673ab7;
-        margin-bottom: 15px;
-        font-weight: bold;
-      }
+.spinner-content h3 {
+  font-size: 19px;
+  color: #5e35b1;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
 
-      .spinner-content p {
-        font-size: 22px;
-        color: #222;
-        font-family: 'Scheherazade', serif;
-        margin-bottom: 25px;
-      }
+.spinner-content p {
+  font-size: 22px;
+  color: #111;
+  font-family: 'Scheherazade', serif;
+  margin-bottom: 25px;
+}
 
-      .spinner-loader {
-        width: 50px;
-        height: 50px;
-        border: 4px solid #673ab7;
-        border-top: 4px solid transparent;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
-        margin: auto;
-      }
+.spinner-loader {
+  width: 55px;
+  height: 55px;
+  border: 5px solid #b39ddb;
+  border-top: 5px solid #673ab7;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 15px auto;
+}
 
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
+.wait-text {
+  font-size: 16px;
+  color: #444;
+  font-style: italic;
+  animation: fadeIn 1s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
 
       @media (max-width: 920px) {
         .container {
@@ -227,14 +245,16 @@
   </head>
 
   <body>
-    <!-- Spinner Modal -->
-    <div id="spinnerModal">
-      <div class="spinner-content">
-        <h3>Recite Darood Shareef At least 3 Times</h3>
-        <p>اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ</p>
-        <div class="spinner-loader"></div>
-      </div>
-    </div>
+   <!-- Spinner Modal -->
+<div id="spinnerModal">
+  <div class="spinner-content">
+    <h3>✨ Recite Darood Shareef At least 3 Times ✨</h3>
+    <p>اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ</p>
+    <div class="spinner-loader"></div>
+    <div class="wait-text">Please wait...</div>
+  </div>
+</div>
+
 
     <div>
       <img src="https://i.postimg.cc/rFH70bnH/logoa.png" class="logo-left" alt="Left Logo">
