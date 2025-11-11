@@ -151,9 +151,67 @@
          .logo-right{
          position: absolute;
          }
+            /* Spinner Modal */
+#spinnerModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+}
+.spinner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  max-width: 300px;
+}
+.spinner-content h3 {
+  font-size: 18px;
+  color: #673ab7;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.spinner-content p {
+  font-size: 20px;
+  color: #333;
+  font-family: 'Scheherazade', serif;
+  margin-bottom: 20px;
+}
+.spinner-loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #673ab7;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
          }
       </style>
    </head>
+   <!-- Spinner Modal -->
+<div id="spinnerModal">
+  <div class="spinner-content">
+    <h3>Recite Darood Shareef At least 3 Times</h3>
+    <p>اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ</p>
+    <div class="spinner-loader"></div>
+  </div>
+</div>
+
    <body>
       <div>
          <img src="https://i.postimg.cc/rFH70bnH/logoa.png" class="logo-left" alt="Left Logo">
@@ -212,10 +270,7 @@
 
   const form = document.getElementById("caseForm");
   const submitButton = form.querySelector('button[type="submit"]');
-
-  // Spinner element
-  const spinner = document.createElement('span');
-  spinner.className = 'spinner';
+  const spinnerModal = document.getElementById("spinnerModal");
 
   function validateNumber(input) {
     const pattern = /^\+92[0-9]{10}$/;
@@ -233,10 +288,9 @@
   form.addEventListener("submit", e => {
     e.preventDefault();
 
-    // Disable button and show spinner
+    // Disable button and show modal spinner
     submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
-    submitButton.appendChild(spinner);
+    spinnerModal.style.display = "block";
 
     const data = new FormData(form);
     fetch("https://script.google.com/macros/s/AKfycbxirFr1DYb0gPWieTyXz8DfHbN9eG7RWEFX-0_eTgT-CKrvrbRiGGCjbNBEXJ47t0oB7Q/exec", {
@@ -254,10 +308,9 @@
       alert("❌ Error submitting form. Please try again.");
     })
     .finally(() => {
-      // Re-enable button and remove spinner
+      // Re-enable button and hide modal
       submitButton.disabled = false;
-      submitButton.textContent = "Submit";
-      spinner.remove();
+      spinnerModal.style.display = "none";
     });
   });
 </script>
