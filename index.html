@@ -206,43 +206,61 @@
          </div>
       </div>
       <script>
-         const dateInput = document.getElementById('caseDate');
-         const today = new Date();
-         dateInput.value = today.toLocaleDateString('en-GB');
-         
-         const form = document.getElementById("caseForm");
-         
-         function validateNumber(input) {
-           const pattern = /^\+92[0-9]{10}$/;
-           if (!pattern.test(input.value)) {
-             input.setCustomValidity("Please enter number in +92XXXXXXXXXX format");
-           } else {
-             input.setCustomValidity("");
-           }
-         }
-         
-         document.querySelectorAll('input[type="tel"]').forEach(input => {
-           input.addEventListener('input', () => validateNumber(input));
-         });
-         
-         form.addEventListener("submit", e => {
-           e.preventDefault();
-           const data = new FormData(form);
-           fetch("https://script.google.com/macros/s/AKfycbxirFr1DYb0gPWieTyXz8DfHbN9eG7RWEFX-0_eTgT-CKrvrbRiGGCjbNBEXJ47t0oB7Q/exec", {
-             method: "POST",
-             body: data
-           })
-           .then(res => res.ok ? res.text() : Promise.reject("Network error"))
-           .then(txt => {
-             alert("✅ Form submitted successfully!");
-             form.reset();
-             dateInput.value = today.toLocaleDateString('en-GB');
-             form.referrerName.focus();
-           })
-           .catch(err => {
-             alert("❌ Error submitting form. Please try again.");
-           });
-         });
-      </script>
+  const dateInput = document.getElementById('caseDate');
+  const today = new Date();
+  dateInput.value = today.toLocaleDateString('en-GB');
+
+  const form = document.getElementById("caseForm");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  // Spinner element
+  const spinner = document.createElement('span');
+  spinner.className = 'spinner';
+
+  function validateNumber(input) {
+    const pattern = /^\+92[0-9]{10}$/;
+    if (!pattern.test(input.value)) {
+      input.setCustomValidity("Please enter number in +92XXXXXXXXXX format");
+    } else {
+      input.setCustomValidity("");
+    }
+  }
+
+  document.querySelectorAll('input[type="tel"]').forEach(input => {
+    input.addEventListener('input', () => validateNumber(input));
+  });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    // Disable button and show spinner
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+    submitButton.appendChild(spinner);
+
+    const data = new FormData(form);
+    fetch("https://script.google.com/macros/s/AKfycbxirFr1DYb0gPWieTyXz8DfHbN9eG7RWEFX-0_eTgT-CKrvrbRiGGCjbNBEXJ47t0oB7Q/exec", {
+      method: "POST",
+      body: data
+    })
+    .then(res => res.ok ? res.text() : Promise.reject("Network error"))
+    .then(txt => {
+      alert("✅ Form submitted successfully!");
+      form.reset();
+      dateInput.value = today.toLocaleDateString('en-GB');
+      form.referrerName.focus();
+    })
+    .catch(err => {
+      alert("❌ Error submitting form. Please try again.");
+    })
+    .finally(() => {
+      // Re-enable button and remove spinner
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit";
+      spinner.remove();
+    });
+  });
+</script>
+
    </body>
 </html>
